@@ -1,5 +1,9 @@
 # Silage Tracker Pro Changelog
 
+## V3.17.0 — Build 2026.10.11.001
+- Dry matter readings and truck weights brought in by a snapshot now show the import label, like “Imported from User 1”
+- Removed Driver Mode
+
 ## V3.16.3 — Build 2026.10.10.005
 - Compacted the Appearance page
 

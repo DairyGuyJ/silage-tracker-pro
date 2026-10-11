@@ -383,7 +383,7 @@ html.ctx-compact .load-instructions{display:none}
   <div class="head-details" id="headDetails">
     <div class="headrow"><div class="head-title-wrap"><div class="title" id="appTitleText">Silage Tracker Pro</div><div class="version" id="appVersionText">Version · Offline</div><div class="version" id="headerFarmName" style="display:none"></div></div><div id="saveStatus" class="version">Saved</div></div>
   </div>
-  <div class="head-bar" id="headBar"><button id="menuBtn" class="menu-btn no-print" aria-label="Open menu">☰</button><div id="pageTitle" class="page-title no-print">Loads</div><span id="driverModeBadge" class="status-pill status-active no-print" style="display:none">🔒 Driver Mode</span></div>
+  <div class="head-bar" id="headBar"><button id="menuBtn" class="menu-btn no-print" aria-label="Open menu">☰</button><div id="pageTitle" class="page-title no-print">Loads</div></div>
 </header>
 <div id="scrollSetPoint" class="scroll-point no-print" aria-hidden="true"></div>
 <div id="menuBackdrop" class="menu-backdrop no-print"></div>
@@ -495,10 +495,6 @@ html.ctx-compact .load-instructions{display:none}
 <section id="settings" class="panel">
   <div class="card">
     <div class="page-section-head"><label>Settings</label></div>
-    <div class="settings-section">
-      <label>Driver Mode</label>
-      <div class="setting-row"><div><div class="setting-label-row"><b>Driver Mode</b><button type="button" class="info-icon" data-info="driverMode">i</button></div><div class="note">Locks everything except Loads.</div></div><label class="switch"><input type="checkbox" id="driverModeToggle"><span class="slider"></span></label></div>
-    </div>
     <div class="settings-section">
       <label>Inoculant Counter</label>
       <div class="setting-row"><div><b>Inoculant counter</b><div class="note">Show or hide the counter on the Loads page. Also available on the Appearance page.</div></div><label class="switch"><input type="checkbox" id="settingsInoculantMain"><span class="slider"></span></label></div>
@@ -861,6 +857,7 @@ html.ctx-compact .load-instructions{display:none}
   <div id="changelogModalBody" class="fullsheet-body">
     <div class="fullsheet-handle"></div>
     <div class="recent-main" style="font-size:calc(20px * var(--text-scale));font-weight:800;margin-bottom:10px">What’s New</div>
+      <div class="note" style="margin-top:10px"><b>What’s new in V3.17.0</b><br>• Dry matter readings and truck weights brought in by a snapshot now show the import label, like “Imported from User 1”<br>• Removed Driver Mode</div>
       <div class="note" style="margin-top:10px"><b>What’s new in V3.16.3</b><br>• Compacted the Appearance page</div>
       <div class="note" style="margin-top:10px"><b>What’s new in V3.16.2</b><br>• Polished UI</div>
       <div class="note" style="margin-top:10px"><b>What’s new in V3.15.0</b><br>• Weights now read in mt (or your chosen unit), and only dry weights are labelled<br>• Field and Storage on the Loads page open a searchable list with Sort By options<br>• Field and storage names must be unique<br>• Added a landscape layout with stats on one side and trucks on the other, and Loads Page Layout options on Appearance</div>

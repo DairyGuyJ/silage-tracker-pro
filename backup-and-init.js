@@ -207,12 +207,12 @@ async function mergeDeviceSnapshot(payload){
   state.dmReadings=state.dmReadings||[];
   const dmMap={},dmKey=r=>Number(r.value).toFixed(3)+'|'+new Date(r.effective).getTime();
   const dmSeen=new Map(),newReadings=[];state.dmReadings.forEach(r=>dmSeen.set(dmKey(r),r.id));
-  (incoming.dmReadings||[]).forEach(r=>{if(!r||!(Number(r.value)>0)||!r.effective)return;const k=dmKey(r);let id=dmSeen.get(k);if(!id){id=uid();const rec={id,value:Number(r.value),effective:r.effective,created:r.created||new Date().toISOString()};state.dmReadings.push(rec);newReadings.push(rec);dmSeen.set(k,id)}dmMap[r.id]=id});
+  (incoming.dmReadings||[]).forEach(r=>{if(!r||!(Number(r.value)>0)||!r.effective)return;const k=dmKey(r);let id=dmSeen.get(k);if(!id){id=uid();const rec={id,value:Number(r.value),effective:r.effective,created:r.created||new Date().toISOString(),importLabel,importedAt:new Date().toISOString()};state.dmReadings.push(rec);newReadings.push(rec);dmSeen.set(k,id)}dmMap[r.id]=id});
 
   state.loadWeightHistory=state.loadWeightHistory||[];
   const whKey=r=>[r.truckId,r.commodityId||'',new Date(r.effective).getTime(),Number(r.weight).toFixed(3)].join('|');
   const whSeen=new Set(state.loadWeightHistory.map(whKey)),newWeights=[];
-  (incoming.loadWeightHistory||[]).forEach(r=>{if(!r||!r.truckId||!(Number(r.weight)>0)||!r.effective)return;const rec={id:uid(),truckId:tid(r.truckId),commodityId:cid(r.commodityId),weight:w(r.weight),effective:r.effective,created:r.created||new Date().toISOString()};if(!rec.truckId)return;const k=whKey(rec);if(whSeen.has(k))return;whSeen.add(k);state.loadWeightHistory.push(rec);newWeights.push(rec)});
+  (incoming.loadWeightHistory||[]).forEach(r=>{if(!r||!r.truckId||!(Number(r.weight)>0)||!r.effective)return;const rec={id:uid(),truckId:tid(r.truckId),commodityId:cid(r.commodityId),weight:w(r.weight),effective:r.effective,created:r.created||new Date().toISOString(),importLabel,importedAt:new Date().toISOString()};if(!rec.truckId)return;const k=whKey(rec);if(whSeen.has(k))return;whSeen.add(k);state.loadWeightHistory.push(rec);newWeights.push(rec)});
 
   // Loads are matched on their id and on what they actually record, so a snapshot
   // that travels out and comes back never lands the same load twice.
