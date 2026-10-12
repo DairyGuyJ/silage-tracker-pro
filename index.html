@@ -232,6 +232,12 @@ html.land-short .side-menu-title,html.land-short .side-menu-version{grid-column:
 body.hi-text .stat-chip-btn.on{color:var(--hi)}
 .lp-reorder{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;font-size:calc(14px * var(--text-scale));color:var(--muted)}
 </style>
+<style id="setup-lists-css">
+.list-capped{position:relative;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;padding:0 10px}
+.list-capped>*:last-child{border-bottom:0}
+.list-more{font-size:calc(12px * var(--text-scale));color:var(--muted);text-align:center;margin-top:6px;font-weight:700}
+.list-more.done{opacity:.7;font-weight:600}
+</style>
 <style id="load-entry-feedback">.truck-button.load-entry-feedback{filter:brightness(1.28);transform:scale(.97);box-shadow:0 0 0 4px rgba(255,193,7,.7),0 0 18px rgba(255,193,7,.8)!important}</style><style id="batch-edit-css">.load-select{width:24px!important;height:24px!important;margin:0 8px 0 0!important}.recent-item.batch-selected{background:color-mix(in srgb,var(--green) 12%,var(--card));border-radius:10px;padding-left:8px;padding-right:8px}.counter-log-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding:10px 0}</style>
 
 <style id="v18-settings-css">
@@ -857,6 +863,7 @@ html.ctx-compact .load-instructions{display:none}
   <div id="changelogModalBody" class="fullsheet-body">
     <div class="fullsheet-handle"></div>
     <div class="recent-main" style="font-size:calc(20px * var(--text-scale));font-weight:800;margin-bottom:10px">What’s New</div>
+      <div class="note" style="margin-top:10px"><b>What’s new in V4.0.0</b><br>• Trucks, fields, storage and commodity lists on Setup now show 5 at a time and scroll inside their own box</div>
       <div class="note" style="margin-top:10px"><b>What’s new in V3.17.0</b><br>• Dry matter readings and truck weights brought in by a snapshot now show the import label, like “Imported from User 1”<br>• Removed Driver Mode</div>
       <div class="note" style="margin-top:10px"><b>What’s new in V3.16.3</b><br>• Compacted the Appearance page</div>
       <div class="note" style="margin-top:10px"><b>What’s new in V3.16.2</b><br>• Polished UI</div>

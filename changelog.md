@@ -1,5 +1,8 @@
 # Silage Tracker Pro Changelog
 
+## V4.0.0 — Build 2026.10.12.001
+- Trucks, fields, storage and commodity lists on Setup now show 5 at a time and scroll inside their own box
+
 ## V3.17.0 — Build 2026.10.11.001
 - Dry matter readings and truck weights brought in by a snapshot now show the import label, like “Imported from User 1”
 - Removed Driver Mode

@@ -121,3 +121,22 @@ document.addEventListener('click',e=>{
   const t=e.target.closest('[data-lp-tab]');if(t){lpOrient=t.dataset.lpTab;renderLoadsPageSettings();return}
   const c=e.target.closest('[data-stat-chip]');if(c){const cb=document.getElementById(c.dataset.statChip);if(!cb)return;cb.checked=!cb.checked;cb.dispatchEvent(new Event('change',{bubbles:true}));setTimeout(renderStatChips,0)}
 });
+
+// ---------- Setup lists: past 5 entries, the list scrolls inside its own box ----------
+const CAPPED_LISTS=['truckList','fieldList','storageList','commodityList'];
+function capSetupLists(){
+  if(!document.querySelector('#setup.panel.active'))return;
+  CAPPED_LISTS.forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    const items=[...el.children].filter(c=>c.offsetParent!==null);
+    let hint=document.getElementById(id+'More');
+    if(items.length<=5){el.classList.remove('list-capped');el.style.maxHeight='';if(hint)hint.remove();return}
+    el.classList.add('list-capped');el.style.maxHeight='';
+    const h=items[5].offsetTop-items[0].offsetTop;
+    el.style.maxHeight=Math.max(120,h)+'px';
+    if(!hint){hint=document.createElement('div');hint.id=id+'More';hint.className='list-more';el.insertAdjacentElement('afterend',hint);el.addEventListener('scroll',()=>updateListHint(el),{passive:true})}
+    updateListHint(el);
+  });
+}
+function updateListHint(el){const hint=document.getElementById(el.id+'More');if(!hint)return;const items=[...el.children].filter(c=>c.offsetParent!==null);const below=items.filter(c=>c.offsetTop>=el.scrollTop+el.clientHeight-4).length;hint.textContent=below>0?'↓ '+below+' more — scroll the list':items.length+' total';hint.classList.toggle('done',below===0)}
+window.addEventListener('resize',()=>setTimeout(capSetupLists,150));
