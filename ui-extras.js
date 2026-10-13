@@ -140,3 +140,46 @@ function capSetupLists(){
 }
 function updateListHint(el){const hint=document.getElementById(el.id+'More');if(!hint)return;const items=[...el.children].filter(c=>c.offsetParent!==null);const below=items.filter(c=>c.offsetTop>=el.scrollTop+el.clientHeight-4).length;hint.textContent=below>0?'↓ '+below+' more — scroll the list':items.length+' total';hint.classList.toggle('done',below===0)}
 window.addEventListener('resize',()=>setTimeout(capSetupLists,150));
+
+// The app's first draw happens before this file loads, so set up the Field/Storage search boxes and layout now
+// instead of waiting for the next tap.
+syncPickButtons();if(typeof renderLayoutChoices==='function')renderLayoutChoices();measureLandSplit();
+
+// ---------- Reports filters use the same search / sort sheet, with tick-to-select ----------
+// Every Reports filter (Field, Field Note, Storage, Truck, Driver, Commodity) opens the picker sheet.
+// Tap names to tick or untick them; the report updates as you go, and Done closes the sheet.
+const MS_USED={fields:l=>l.fieldId,storages:l=>l.storageId,trucks:l=>l.truckId,drivers:l=>loadDriverName(l),notes:l=>noteDisplay(l)||NO_NOTE,commodities:l=>l.commodityId||NO_COMMODITY};
+let msItems=[];
+function msDef(){return pickKind&&pickKind.startsWith('ms:')?reportFilterDefs().find(d=>d.key===pickKind.slice(3)):null}
+function openMsPicker(key){const def=reportFilterDefs().find(d=>d.key===key);if(!def)return;pickKind='ms:'+key;document.getElementById('pickTitle').textContent='Filter by '+def.label;const q=document.getElementById('pickSearch');q.value='';q.placeholder='Search '+def.plural;document.getElementById('pickCloseBtn').textContent='Done';renderPicker();document.getElementById('pickModal').classList.add('show')}
+function renderMsPicker(){
+  const def=msDef();if(!def)return;state.pickSort=state.pickSort||{};const sort=state.pickSort[pickKind]||'recent';
+  document.getElementById('pickSorts').innerHTML=PICK_SORTS.map(([k,l])=>'<button type="button" class="pick-sort'+(k===sort?' on':'')+'" data-pick-sort="'+k+'">'+l+'</button>').join('');
+  const q=document.getElementById('pickSearch').value.trim().toLowerCase(),sel=new Set(reportSelections[def.key]||[]);
+  const used=MS_USED[def.key]||(()=>''),last={},count={};
+  state.loads.forEach(l=>{const v=used(l),t=new Date(l.time).getTime();if(v===undefined||v===null||v==='')return;count[v]=(count[v]||0)+1;if(Number.isFinite(t)&&(!last[v]||t>last[v]))last[v]=t});
+  let items=def.items.map((x,i)=>({x,i})).filter(o=>!q||String(o.x.label).toLowerCase().includes(q));
+  const byName=(a,b)=>String(a.x.label).localeCompare(String(b.x.label),undefined,{numeric:true,sensitivity:'base'});
+  if(sort==='az')items.sort(byName);else if(sort==='za')items.sort((a,b)=>byName(b,a));else if(sort==='recent')items.sort((a,b)=>((last[b.x.value]||0)-(last[a.x.value]||0))||byName(a,b));
+  msItems=items.map(o=>o.x);
+  const tools='<div class="pick-ms-tools"><span>'+(sel.size?sel.size+' selected':'All '+def.plural+' included')+'</span><button type="button" class="btn small grey" data-ms-pick-all="1">Select '+(q?'Shown':'All')+'</button><button type="button" class="btn small grey" data-ms-pick-none="1">Clear</button></div>';
+  const fieldSub=v=>{if(def.key!=='fields')return '';const f=state.fields.find(x=>x.id===v);return f&&f.size?money(f.size)+' acres':''};
+  document.getElementById('pickList').innerHTML=tools+(items.length?items.map((o,i)=>{const n=count[o.x.value]||0,sub=[fieldSub(o.x.value),n?n+' load'+(n===1?'':'s'):'No loads'].filter(Boolean).join(' · ');return '<button type="button" class="pick-item pick-check'+(sel.has(o.x.value)?' selected':'')+'" data-pick-ms="'+i+'" aria-pressed="'+(sel.has(o.x.value)?'true':'false')+'"><span class="pick-tick" aria-hidden="true"></span><b>'+esc(o.x.label)+'</b><span>'+esc(sub)+'</span></button>'}).join(''):'<div class="empty">'+(q?'No matches.':'Nothing to filter on yet.')+'</div>');
+}
+function msChanged(){if(typeof refreshFilterLabels==='function')refreshFilterLabels();if(typeof renderReportResults==='function')renderReportResults();renderMsPicker()}
+function closeMsPicker(){closeModal('pickModal');pickKind=null;document.getElementById('pickCloseBtn').textContent='Close';if(typeof renderReportFilters==='function')renderReportFilters()}
+(function(){
+  const single=renderPicker;renderPicker=function(){return pickKind&&pickKind.startsWith('ms:')?renderMsPicker():single()};
+  const plain=renderReportFilters;renderReportFilters=function(){plain.apply(this,arguments);document.querySelectorAll('#reportFilterGrid .ms-caret').forEach(c=>{c.innerHTML=PICK_ICON});document.querySelectorAll('#reportFilterGrid .ms-panel').forEach(p=>p.remove())};
+  document.addEventListener('click',e=>{
+    const t=e.target.closest('[data-ms-toggle]');if(t){e.stopPropagation();e.preventDefault();openMsPicker(t.dataset.msToggle);return}
+    if(!pickKind||!pickKind.startsWith('ms:'))return;
+    if(e.target.id==='pickModal'||e.target.id==='pickCloseBtn'){e.stopPropagation();closeMsPicker();return}
+    const def=msDef();if(!def)return;
+    const it=e.target.closest('[data-pick-ms]');
+    if(it){e.stopPropagation();const v=msItems[Number(it.dataset.pickMs)]?.value;if(v===undefined)return;const cur=reportSelections[def.key]||[];reportSelections[def.key]=cur.includes(v)?cur.filter(x=>x!==v):cur.concat([v]);msChanged();return}
+    if(e.target.closest('[data-ms-pick-all]')){e.stopPropagation();reportSelections[def.key]=[...new Set((reportSelections[def.key]||[]).concat(msItems.map(x=>x.value)))];msChanged();return}
+    if(e.target.closest('[data-ms-pick-none]')){e.stopPropagation();reportSelections[def.key]=[];msChanged();return}
+  },true);
+  if(typeof renderReportFilters==='function'&&document.getElementById('reportFilterGrid'))renderReportFilters();
+})();

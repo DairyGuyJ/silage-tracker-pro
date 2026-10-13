@@ -238,6 +238,18 @@ body.hi-text .stat-chip-btn.on{color:var(--hi)}
 .list-more{font-size:calc(12px * var(--text-scale));color:var(--muted);text-align:center;margin-top:6px;font-weight:700}
 .list-more.done{opacity:.7;font-weight:600}
 </style>
+<style id="report-picker-css">
+#reportFilterGrid .ms-toggle{min-height:48px;border:2px solid var(--line);border-radius:12px;background:var(--card);font-weight:700;font-size:calc(16px * var(--text-scale))}
+#reportFilterGrid .ms-toggle .ms-text{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#reportFilterGrid .ms-caret{display:flex;color:var(--muted)}
+#reportFilterGrid .ms-toggle.ms-has-selection{border-color:var(--green);box-shadow:none;background:color-mix(in srgb,var(--green) 8%,var(--card))}
+.pick-ms-tools{display:flex;align-items:center;gap:6px;position:sticky;top:0;z-index:1;background:var(--card);padding-bottom:6px}
+.pick-ms-tools span{flex:1;font-size:calc(13px * var(--text-scale));color:var(--muted);font-weight:700}
+.pick-check{position:relative;padding-left:46px}
+.pick-tick{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:6px;border:2px solid var(--line);background:var(--card)}
+.pick-check.selected .pick-tick{background:var(--green);border-color:var(--green)}
+.pick-check.selected .pick-tick::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg)}
+</style>
 <style id="load-entry-feedback">.truck-button.load-entry-feedback{filter:brightness(1.28);transform:scale(.97);box-shadow:0 0 0 4px rgba(255,193,7,.7),0 0 18px rgba(255,193,7,.8)!important}</style><style id="batch-edit-css">.load-select{width:24px!important;height:24px!important;margin:0 8px 0 0!important}.recent-item.batch-selected{background:color-mix(in srgb,var(--green) 12%,var(--card));border-radius:10px;padding-left:8px;padding-right:8px}.counter-log-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding:10px 0}</style>
 
 <style id="v18-settings-css">
@@ -863,6 +875,8 @@ html.ctx-compact .load-instructions{display:none}
   <div id="changelogModalBody" class="fullsheet-body">
     <div class="fullsheet-handle"></div>
     <div class="recent-main" style="font-size:calc(20px * var(--text-scale));font-weight:800;margin-bottom:10px">What’s New</div>
+      <div class="note" style="margin-top:10px"><b>What’s new in V4.1.0</b><br>• Report filters now open the same search and Sort By list as the Loads page, with tap-to-tick selection</div>
+      <div class="note" style="margin-top:10px"><b>What’s new in V4.0.1</b><br>• Bug fixes</div>
       <div class="note" style="margin-top:10px"><b>What’s new in V4.0.0</b><br>• Trucks, fields, storage and commodity lists on Setup now show 5 at a time and scroll inside their own box</div>
       <div class="note" style="margin-top:10px"><b>What’s new in V3.17.0</b><br>• Dry matter readings and truck weights brought in by a snapshot now show the import label, like “Imported from User 1”<br>• Removed Driver Mode</div>
       <div class="note" style="margin-top:10px"><b>What’s new in V3.16.3</b><br>• Compacted the Appearance page</div>
@@ -940,18 +954,18 @@ html.ctx-compact .load-instructions{display:none}
   <div class="actions"><button class="btn grey" id="appConfirmCancelBtn" type="button" style="flex:1">Cancel</button><button class="btn danger" id="appConfirmOkBtn" type="button" style="flex:1">OK</button></div>
 </div></div>
 <div id="dimLayer" class="dim-layer"></div><div id="toast" class="toast">Saved</div>
-<script src="core-state.js"></script>
-<script src="loads.js"></script>
-<script src="navigation-setup.js"></script>
-<script src="counter-and-picker.js"></script>
-<script src="truck-and-batch-edit.js"></script>
-<script src="render-and-reports.js"></script>
-<script src="csv-io.js"></script>
-<script src="backup-and-init.js"></script>
-<script src="app-init.js"></script>
-<script src="scroll-collapse.js"></script>
-<script src="keyboard-assist.js"></script>
-<script src="qr-code.js"></script>
-<script src="ui-extras.js"></script>
+<script src="core-state.js?v=4.1.0"></script>
+<script src="loads.js?v=4.1.0"></script>
+<script src="navigation-setup.js?v=4.1.0"></script>
+<script src="counter-and-picker.js?v=4.1.0"></script>
+<script src="truck-and-batch-edit.js?v=4.1.0"></script>
+<script src="render-and-reports.js?v=4.1.0"></script>
+<script src="csv-io.js?v=4.1.0"></script>
+<script src="backup-and-init.js?v=4.1.0"></script>
+<script src="app-init.js?v=4.1.0"></script>
+<script src="scroll-collapse.js?v=4.1.0"></script>
+<script src="keyboard-assist.js?v=4.1.0"></script>
+<script src="qr-code.js?v=4.1.0"></script>
+<script src="ui-extras.js?v=4.1.0"></script>
 </body>
 </html>

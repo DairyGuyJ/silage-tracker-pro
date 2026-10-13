@@ -1,5 +1,11 @@
 # Silage Tracker Pro Changelog
 
+## V4.1.0 — Build 2026.10.13.001
+- Report filters now open the same search and Sort By list as the Loads page, with tap-to-tick selection
+
+## V4.0.1 — Build 2026.10.12.002
+- Bug fixes
+
 ## V4.0.0 — Build 2026.10.12.001
 - Trucks, fields, storage and commodity lists on Setup now show 5 at a time and scroll inside their own box
 

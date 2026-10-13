@@ -1,5 +1,7 @@
-const CACHE='silage-tracker-pro-v4.0.0-001';
-const ASSETS=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./silage-banner.png','./load-sound.mp3','./chime-alt.mp3','./core-state.js','./loads.js','./navigation-setup.js','./counter-and-picker.js','./truck-and-batch-edit.js','./render-and-reports.js','./csv-io.js','./backup-and-init.js','./app-init.js','./scroll-collapse.js','./keyboard-assist.js','./ui-extras.js','./qr-code.js'];
+const CACHE='silage-tracker-pro-v4.1.0-001';
+const APP_VERSION='4.1.0';
+const SCRIPT_FILES=["core-state", "loads", "navigation-setup", "counter-and-picker", "truck-and-batch-edit", "render-and-reports", "csv-io", "backup-and-init", "app-init", "scroll-collapse", "keyboard-assist", "qr-code", "ui-extras"];
+const ASSETS=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./silage-banner.png','./load-sound.mp3','./chime-alt.mp3','./core-state.js','./loads.js','./navigation-setup.js','./counter-and-picker.js','./truck-and-batch-edit.js','./render-and-reports.js','./csv-io.js','./backup-and-init.js','./app-init.js','./scroll-collapse.js','./keyboard-assist.js','./ui-extras.js','./qr-code.js'].concat(SCRIPT_FILES.map(n=>'./'+n+'.js?v='+APP_VERSION));
 self.addEventListener('install',event=>{
   // Cached one at a time on purpose: addAll() rejects the whole install if a
   // single asset 404s, which silently leaves the app with no worker at all.
