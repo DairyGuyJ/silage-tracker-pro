@@ -1,5 +1,11 @@
 # Silage Tracker Pro Changelog
 
+## V4.1.2 — Build 2026.10.13.003
+- Added a privacy policy under About
+
+## V4.1.1 — Build 2026.10.13.002
+- Added anonymous visit counting
+
 ## V4.1.0 — Build 2026.10.13.001
 - Report filters now open the same search and Sort By list as the Loads page, with tap-to-tick selection
 

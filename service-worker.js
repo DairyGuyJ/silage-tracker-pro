@@ -1,5 +1,5 @@
-const CACHE='silage-tracker-pro-v4.1.0-001';
-const APP_VERSION='4.1.0';
+const CACHE='silage-tracker-pro-v4.1.2-001';
+const APP_VERSION='4.1.2';
 const SCRIPT_FILES=["core-state", "loads", "navigation-setup", "counter-and-picker", "truck-and-batch-edit", "render-and-reports", "csv-io", "backup-and-init", "app-init", "scroll-collapse", "keyboard-assist", "qr-code", "ui-extras"];
 const ASSETS=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./silage-banner.png','./load-sound.mp3','./chime-alt.mp3','./core-state.js','./loads.js','./navigation-setup.js','./counter-and-picker.js','./truck-and-batch-edit.js','./render-and-reports.js','./csv-io.js','./backup-and-init.js','./app-init.js','./scroll-collapse.js','./keyboard-assist.js','./ui-extras.js','./qr-code.js'].concat(SCRIPT_FILES.map(n=>'./'+n+'.js?v='+APP_VERSION));
 self.addEventListener('install',event=>{
@@ -14,6 +14,8 @@ self.addEventListener('activate',event=>{
 });
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET') return;
+  // Only the app's own files are cached; anything from another site (like the visit counter) goes straight to the network.
+  if(new URL(event.request.url).origin!==self.location.origin) return;
   // The page itself is fetched network-first so a new deploy shows up straight away.
   // Everything else stays cache-first; the cache name above busts them on release.
   if(event.request.mode==='navigate'||event.request.destination==='document'){
